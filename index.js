@@ -59,8 +59,10 @@ async function run() {
           subcategory_Name: updateCraftItems.subcategory_Name,
         }
       }
+      const result = await craftItemsCollection.updateOne(filter , craftItems , options);
+      res.send(result);
     
-    })
+    });
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
