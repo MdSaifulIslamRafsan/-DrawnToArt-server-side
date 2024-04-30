@@ -1,5 +1,5 @@
 const express = require('express');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config()
 const cors = require('cors');
 const app = express();
@@ -39,6 +39,28 @@ async function run() {
         res.send(result);
     })
 
+    app.put("/craftItems/:id" , async(req , res ) => {
+      const id = req.params.id;
+      const filter = {_id: new ObjectId(id)}
+      const options = {upsert : true}
+      const updateCraftItems = req.body;
+      const craftItems = {
+        $set:{
+          name: updateCraftItems.name,
+          email: updateCraftItems.email,
+          customization: updateCraftItems.customization,
+          description: updateCraftItems.description,
+          image: updateCraftItems.image,
+          item_name: updateCraftItems.item_name,
+          price: updateCraftItems.price,
+          processing_time: updateCraftItems.processing_time,
+          rating: updateCraftItems.rating,
+          stockStatus: updateCraftItems.stockStatus,
+          subcategory_Name: updateCraftItems.subcategory_Name,
+        }
+      }
+    
+    })
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
